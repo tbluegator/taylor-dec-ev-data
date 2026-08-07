@@ -1,0 +1,63 @@
+{
+ "county": "Taylor",
+ "election": "2026 Florida Primary",
+ "election_id": "49893",
+ "election_date": "2026-08-18",
+ "ev_start": "2026-08-08",
+ "ev_end": "2026-08-15",
+ "source_url": "https://countyfilesvbm-ev.floridados.gov/VoteByMailEarlyVotingReports/PublicStats",
+ "days": [
+  {
+   "date": "2026-08-07",
+   "compiled": "08/07/2026 8:03AM",
+   "compiled_state": "08/07/2026 11:01AM",
+   "taylor": {
+    "vbm_outstanding": {
+     "R": 217,
+     "D": 174,
+     "O": 1,
+     "NPA": 7,
+     "T": 399
+    },
+    "vbm_returned": {
+     "R": 130,
+     "D": 73,
+     "O": 2,
+     "NPA": 1,
+     "T": 206
+    },
+    "early_voted": {
+     "R": 0,
+     "D": 0,
+     "O": 0,
+     "NPA": 0,
+     "T": 0
+    }
+   },
+   "statewide": {
+    "vbm_outstanding": {
+     "R": 416178,
+     "D": 540681,
+     "O": 29557,
+     "NPA": 256826,
+     "T": 1243242
+    },
+    "vbm_returned": {
+     "R": 265010,
+     "D": 300560,
+     "O": 12732,
+     "NPA": 103937,
+     "T": 682239
+    },
+    "early_voted": {
+     "R": 20101,
+     "D": 16313,
+     "O": 359,
+     "NPA": 3001,
+     "T": 39774
+    }
+   },
+   "note": "Baseline. Early voting opens Aug 8; first EV rows expected Aug 9."
+  }
+ ]
+}
