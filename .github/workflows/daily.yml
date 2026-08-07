@@ -1,0 +1,52 @@
+name: Daily EV/VBM pull
+
+on:
+  schedule:
+    # 13:30 UTC = 9:30 a.m. Eastern Daylight Time.
+    # GitHub cron is UTC and does NOT follow daylight saving. This is correct
+    # through Nov 1 2026; after DST ends it fires at 8:30 a.m. Eastern. For the
+    # November general, change this to '30 14 * * *' on Nov 1.
+    #
+    # Scheduled runs are also frequently delayed by GitHub (5-20 min at peak).
+    # That is fine here: the state publishes by 9:00 and refreshes at noon,
+    # 3 p.m. and 6 p.m., so a late run still gets the same file.
+    - cron: '30 13 * * *'
+  workflow_dispatch:        # lets you run it by hand from the Actions tab
+
+permissions:
+  contents: write           # the only permission needed; uses the built-in
+                            # GITHUB_TOKEN, so there is no secret to store
+
+concurrency:
+  group: ev-pull
+  cancel-in-progress: false
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install --quiet requests beautifulsoup4
+
+      - name: Verify the parser still works
+        run: python test_scrape.py
+
+      - name: Pull today's figures
+        run: python scrape.py
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name  "ev-tracker[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add latest.json
+          if git diff --staged --quiet; then
+            echo "no change - the state has not republished yet"
+          else
+            git commit -m "EV/VBM data $(TZ=America/New_York date +%F)"
+            git push
+          fi
