@@ -36,6 +36,16 @@ import requests
 from bs4 import BeautifulSoup
 
 URL = "https://countyfilesvbm-ev.floridados.gov/VoteByMailEarlyVotingReports/PublicStats"
+
+# The county Supervisor of Elections' own live feed (VR Systems "Turnout Quick
+# View"). Refreshes every few minutes and, unlike the state file, shows in-person
+# early votes the same day. It counts ballots CAST only - it has no measure of
+# outstanding ballots, so it supplements the state file rather than replacing it.
+# Snapshotted here so the dashboard has a stored history and a fallback if the
+# live fetch is ever blocked browser-side.
+TQV_BASE = "https://s3.amazonaws.com/turnoutquickview.electionsfl.org/data/FL/TAY/84/"
+TQV_URL = TQV_BASE + "data.json"
+TQV_OV_URL = TQV_BASE + "overrides.json"
 COUNTY = os.environ.get("COUNTY", "Taylor")
 OUT = os.environ.get("OUT", "latest.json")
 TZ = ZoneInfo("America/New_York")
@@ -166,6 +176,18 @@ def monotonic_check(prev, cur):
                 )
 
 
+def soft_json(url):
+    """Fetch optional JSON. Never raises - a county-feed outage must not fail the
+    run, because the state figures are the ones the dashboard cannot do without."""
+    try:
+        r = requests.get(url, timeout=30, headers={"Accept": "application/json"})
+        r.raise_for_status()
+        return r.json()
+    except Exception as e:
+        print(f"::warning::county live feed unavailable ({url}): {e}")
+        return None
+
+
 def main():
     r = requests.get(URL, timeout=45, headers={
         "User-Agent": "taylor-dec-ev-tracker/1.0 (+https://github.com/)",
@@ -201,6 +223,20 @@ def main():
 
     data["days"] = days
     data["updated_at"] = datetime.now(TZ).isoformat(timespec="seconds")
+
+    # Snapshot the county live feed alongside the state figures.
+    data["tqv_url"] = TQV_URL
+    data["tqv_overrides_url"] = TQV_OV_URL
+    tqv = soft_json(TQV_URL)
+    tqv_ov = soft_json(TQV_OV_URL)
+    if tqv:
+        data["tqv"] = tqv
+        party = (tqv.get("Turnout") or {}).get("PartyType") or {}
+        dem, rep = party.get("DEM", {}), party.get("REP", {})
+        print(f"  county feed   D early {dem.get('EarlyVoting', 0)} / mail {dem.get('Mail', 0)}"
+              f"   R early {rep.get('EarlyVoting', 0)} / mail {rep.get('Mail', 0)}")
+    if tqv_ov:
+        data["tqv_overrides"] = tqv_ov
 
     with open(OUT, "w") as f:
         json.dump(data, f, indent=1)
