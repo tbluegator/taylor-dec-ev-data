@@ -212,7 +212,7 @@
    }
   }
  ],
- "updated_at": "2026-08-10T10:42:15-04:00",
+ "updated_at": "2026-08-10T12:10:39-04:00",
  "tqv_url": "https://s3.amazonaws.com/turnoutquickview.electionsfl.org/data/FL/TAY/84/data.json",
  "tqv_overrides_url": "https://s3.amazonaws.com/turnoutquickview.electionsfl.org/data/FL/TAY/84/overrides.json",
  "tqv": {
@@ -220,7 +220,7 @@
    "TotalRegisteredVoters": 10854,
    "ElectionName": "2026 Primary Election",
    "ElectionDate": "08/18/2026",
-   "LastUpdatedTime": "2026-08-10T14:40:01.3533841+00:00",
+   "LastUpdatedTime": "2026-08-10T16:10:01.271946+00:00",
    "CountyName": "TAYLOR",
    "FvrsElectionNumber": 49893
   },
@@ -448,13 +448,13 @@
      "Mail": 2
     },
     "08/10/2026": {
-     "EarlyVoting": 39,
+     "EarlyVoting": 64,
      "Mail": 2
     }
    },
    "PartyType": {
     "DEM": {
-     "EarlyVoting": 34,
+     "EarlyVoting": 41,
      "Mail": 88
     },
     "IND": {
@@ -466,38 +466,38 @@
      "Mail": 1
     },
     "REP": {
-     "EarlyVoting": 146,
+     "EarlyVoting": 164,
      "Mail": 146
     }
    },
    "LocationParty": {
     "EarlyVoting": {
      "SOE OFFICE": {
-      "DEM": 34,
+      "DEM": 41,
       "IND": 1,
       "NPA": 3,
-      "REP": 146
+      "REP": 164
      }
     }
    },
    "PrecinctType": {
     "001.3": {
      "BallotTypeTotals": {
-      "EarlyVoting": 4,
+      "EarlyVoting": 5,
       "Mail": 8
      },
      "EligibleVoters": 211
     },
     "001.4": {
      "BallotTypeTotals": {
-      "EarlyVoting": 12,
+      "EarlyVoting": 15,
       "Mail": 18
      },
      "EligibleVoters": 536
     },
     "002": {
      "BallotTypeTotals": {
-      "EarlyVoting": 21,
+      "EarlyVoting": 23,
       "Mail": 15
      },
      "EligibleVoters": 1353
@@ -531,7 +531,7 @@
     },
     "007": {
      "BallotTypeTotals": {
-      "EarlyVoting": 31,
+      "EarlyVoting": 37,
       "Mail": 37
      },
      "EligibleVoters": 1356
@@ -545,14 +545,14 @@
     },
     "008.5": {
      "BallotTypeTotals": {
-      "EarlyVoting": 15,
+      "EarlyVoting": 17,
       "Mail": 12
      },
      "EligibleVoters": 488
     },
     "009": {
      "BallotTypeTotals": {
-      "EarlyVoting": 7,
+      "EarlyVoting": 11,
       "Mail": 7
      },
      "EligibleVoters": 408
@@ -566,7 +566,7 @@
     },
     "011": {
      "BallotTypeTotals": {
-      "EarlyVoting": 2,
+      "EarlyVoting": 4,
       "Mail": 7
      },
      "EligibleVoters": 423
@@ -587,14 +587,14 @@
     },
     "013.1": {
      "BallotTypeTotals": {
-      "EarlyVoting": 4,
+      "EarlyVoting": 5,
       "Mail": 11
      },
      "EligibleVoters": 631
     },
     "013.2": {
      "BallotTypeTotals": {
-      "EarlyVoting": 7,
+      "EarlyVoting": 8,
       "Mail": 17
      },
      "EligibleVoters": 345
@@ -607,14 +607,14 @@
     },
     "013.5": {
      "BallotTypeTotals": {
-      "EarlyVoting": 5,
+      "EarlyVoting": 6,
       "Mail": 4
      },
      "EligibleVoters": 210
     },
     "014": {
      "BallotTypeTotals": {
-      "EarlyVoting": 33,
+      "EarlyVoting": 35,
       "Mail": 32
      },
      "EligibleVoters": 1685
@@ -635,8 +635,8 @@
        "REP": 34
       },
       "08/10/2026": {
-       "DEM": 5,
-       "REP": 34
+       "DEM": 12,
+       "REP": 52
       }
      }
     }
@@ -650,5 +650,123 @@
    "ElectionDay": []
   },
   "IsVisibleInQuickView": true
+ },
+ "mail_party_backfill": {
+  "source": "Taylor County SOE voter-level vote-by-mail file, pulled 2026-08-09",
+  "method": "count of BallotReturnDate by Party, per voter record",
+  "complete_through": "08/08/2026",
+  "note": "Aggregate daily party counts only - the underlying file is restricted under s.101.62(2), F.S. and no voter-level data appears here. Verified against the snapshot-delta method where they overlap (Aug 7, Aug 8). Historical days are settled and do not change.",
+  "days": {
+   "07/10/2026": {
+    "D": 1,
+    "R": 0,
+    "other": 0
+   },
+   "07/15/2026": {
+    "D": 6,
+    "R": 4,
+    "other": 0
+   },
+   "07/16/2026": {
+    "D": 5,
+    "R": 9,
+    "other": 0
+   },
+   "07/17/2026": {
+    "D": 0,
+    "R": 2,
+    "other": 0
+   },
+   "07/19/2026": {
+    "D": 5,
+    "R": 0,
+    "other": 0
+   },
+   "07/20/2026": {
+    "D": 2,
+    "R": 8,
+    "other": 1
+   },
+   "07/21/2026": {
+    "D": 1,
+    "R": 12,
+    "other": 1
+   },
+   "07/22/2026": {
+    "D": 3,
+    "R": 11,
+    "other": 0
+   },
+   "07/23/2026": {
+    "D": 3,
+    "R": 6,
+    "other": 0
+   },
+   "07/24/2026": {
+    "D": 4,
+    "R": 4,
+    "other": 0
+   },
+   "07/27/2026": {
+    "D": 6,
+    "R": 8,
+    "other": 0
+   },
+   "07/28/2026": {
+    "D": 2,
+    "R": 8,
+    "other": 0
+   },
+   "07/29/2026": {
+    "D": 7,
+    "R": 4,
+    "other": 0
+   },
+   "07/30/2026": {
+    "D": 3,
+    "R": 14,
+    "other": 0
+   },
+   "07/31/2026": {
+    "D": 6,
+    "R": 7,
+    "other": 0
+   },
+   "08/03/2026": {
+    "D": 8,
+    "R": 6,
+    "other": 0
+   },
+   "08/04/2026": {
+    "D": 6,
+    "R": 8,
+    "other": 0
+   },
+   "08/05/2026": {
+    "D": 3,
+    "R": 12,
+    "other": 1
+   },
+   "08/06/2026": {
+    "D": 3,
+    "R": 8,
+    "other": 0
+   },
+   "08/07/2026": {
+    "D": 10,
+    "R": 9,
+    "other": 0
+   },
+   "08/08/2026": {
+    "D": 4,
+    "R": 4,
+    "other": 0
+   },
+   "08/09/2026": {
+    "D": 1,
+    "R": 1,
+    "other": 0
+   }
+  }
  }
 }
