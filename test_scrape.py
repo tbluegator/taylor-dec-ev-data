@@ -131,6 +131,45 @@ try:
 except Exception as e:
     check("no previous day is fine", False, str(e))
 
+print("\nmail party backfill")
+from scrape import MAIL_BACKFILL as MB, MAIL_BACKFILL_THROUGH as MBT
+import re as _re
+check("every key is MM/DD/YYYY",
+      all(_re.fullmatch(r"\d{2}/\d{2}/\d{4}", k) for k in MB),
+      [k for k in MB if not _re.fullmatch(r"\d{2}/\d{2}/\d{4}", k)])
+check("no negative counts",
+      all(v >= 0 for r in MB.values() for v in r.values()))
+check("every row has D, R, other",
+      all(set(r) == {"D", "R", "other"} for r in MB.values()))
+check("complete_through is a real date in the table", MBT in MB, MBT)
+tD = sum(r["D"] for r in MB.values()); tR = sum(r["R"] for r in MB.values())
+check("D total = 89", tD == 89, tD)
+check("R total = 145", tR == 145, tR)
+
+# The whole point of the backfill is that it reproduces the method it replaces.
+# These two days are the only ones both methods can see; if they ever diverge,
+# the file was misread and every earlier day is suspect.
+for day, D, R in (("08/07/2026", 10, 9), ("08/08/2026", 4, 4)):
+    check(f"backfill {day} matches snapshot delta (D{D}/R{R})",
+          MB[day]["D"] == D and MB[day]["R"] == R, MB[day])
+
+# A day past complete_through is a partial count and must never be trusted.
+check("Aug 9 is past complete_through",
+      _re.sub(r"(\d\d)/(\d\d)/(\d{4})", r"\3\1\2", "08/09/2026") >
+      _re.sub(r"(\d\d)/(\d\d)/(\d{4})", r"\3\1\2", MBT))
+
+print("\nbackfill survives a latest.json round-trip")
+with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+    json.dump({"days": [], "election_id": "49893", "hand_edited": "keep me"}, f)
+    tmp = f.name
+_d = json.load(open(tmp))
+_d["mail_party_backfill"] = {"days": MB, "complete_through": MBT}
+json.dump(_d, open(tmp, "w"))
+_r = json.load(open(tmp))
+check("unrelated keys preserved", _r.get("hand_edited") == "keep me")
+check("backfill readable after write", _r["mail_party_backfill"]["days"]["07/10/2026"]["D"] == 1)
+os.unlink(tmp)
+
 print()
 if fails:
     print(f"{len(fails)} FAILED: {fails}")
