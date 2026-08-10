@@ -212,7 +212,7 @@
    }
   }
  ],
- "updated_at": "2026-08-10T12:10:39-04:00",
+ "updated_at": "2026-08-10T13:05:04-04:00",
  "tqv_url": "https://s3.amazonaws.com/turnoutquickview.electionsfl.org/data/FL/TAY/84/data.json",
  "tqv_overrides_url": "https://s3.amazonaws.com/turnoutquickview.electionsfl.org/data/FL/TAY/84/overrides.json",
  "tqv": {
@@ -220,7 +220,7 @@
    "TotalRegisteredVoters": 10854,
    "ElectionName": "2026 Primary Election",
    "ElectionDate": "08/18/2026",
-   "LastUpdatedTime": "2026-08-10T16:10:01.271946+00:00",
+   "LastUpdatedTime": "2026-08-10T17:00:01.7720763+00:00",
    "CountyName": "TAYLOR",
    "FvrsElectionNumber": 49893
   },
@@ -448,13 +448,13 @@
      "Mail": 2
     },
     "08/10/2026": {
-     "EarlyVoting": 64,
+     "EarlyVoting": 79,
      "Mail": 2
     }
    },
    "PartyType": {
     "DEM": {
-     "EarlyVoting": 41,
+     "EarlyVoting": 43,
      "Mail": 88
     },
     "IND": {
@@ -466,17 +466,17 @@
      "Mail": 1
     },
     "REP": {
-     "EarlyVoting": 164,
+     "EarlyVoting": 177,
      "Mail": 146
     }
    },
    "LocationParty": {
     "EarlyVoting": {
      "SOE OFFICE": {
-      "DEM": 41,
+      "DEM": 43,
       "IND": 1,
       "NPA": 3,
-      "REP": 164
+      "REP": 177
      }
     }
    },
@@ -497,14 +497,14 @@
     },
     "002": {
      "BallotTypeTotals": {
-      "EarlyVoting": 23,
+      "EarlyVoting": 24,
       "Mail": 15
      },
      "EligibleVoters": 1353
     },
     "003": {
      "BallotTypeTotals": {
-      "EarlyVoting": 12,
+      "EarlyVoting": 13,
       "Mail": 13
      },
      "EligibleVoters": 642
@@ -517,7 +517,7 @@
     },
     "005": {
      "BallotTypeTotals": {
-      "EarlyVoting": 3,
+      "EarlyVoting": 5,
       "Mail": 15
      },
      "EligibleVoters": 877
@@ -531,7 +531,7 @@
     },
     "007": {
      "BallotTypeTotals": {
-      "EarlyVoting": 37,
+      "EarlyVoting": 41,
       "Mail": 37
      },
      "EligibleVoters": 1356
@@ -559,7 +559,7 @@
     },
     "010": {
      "BallotTypeTotals": {
-      "EarlyVoting": 6,
+      "EarlyVoting": 7,
       "Mail": 4
      },
      "EligibleVoters": 498
@@ -587,7 +587,7 @@
     },
     "013.1": {
      "BallotTypeTotals": {
-      "EarlyVoting": 5,
+      "EarlyVoting": 6,
       "Mail": 11
      },
      "EligibleVoters": 631
@@ -607,14 +607,14 @@
     },
     "013.5": {
      "BallotTypeTotals": {
-      "EarlyVoting": 6,
+      "EarlyVoting": 7,
       "Mail": 4
      },
      "EligibleVoters": 210
     },
     "014": {
      "BallotTypeTotals": {
-      "EarlyVoting": 35,
+      "EarlyVoting": 39,
       "Mail": 32
      },
      "EligibleVoters": 1685
@@ -635,8 +635,8 @@
        "REP": 34
       },
       "08/10/2026": {
-       "DEM": 12,
-       "REP": 52
+       "DEM": 14,
+       "REP": 65
       }
      }
     }
@@ -768,5 +768,15 @@
     "other": 0
    }
   }
+ },
+ "registration": {
+  "as_of": "2026-06-30",
+  "active": true,
+  "source": "https://dos.fl.gov/elections/data-statistics/voter-registration-statistics/voter-registration-reports/voter-registration-by-county-and-party/",
+  "D": 2847,
+  "R": 7496,
+  "minor": 298,
+  "NPA": 970,
+  "T": 11611
  }
 }
