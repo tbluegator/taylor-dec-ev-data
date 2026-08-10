@@ -50,6 +50,57 @@ COUNTY = os.environ.get("COUNTY", "Taylor")
 OUT = os.environ.get("OUT", "latest.json")
 TZ = ZoneInfo("America/New_York")
 
+# ---------------------------------------------------------------------------
+# Daily mail-return party split, backfilled.
+#
+# The dashboard splits each day's mail returns by party using the change between
+# two consecutive state snapshots. That only works from the day we started
+# snapshotting (Aug 7) - every earlier day could only be drawn as an all-party
+# total, because the county's live feed breaks mail down by date OR by party,
+# never both.
+#
+# The county's voter-level VBM file carries a BallotReturnDate on every record,
+# so those earlier days can simply be counted. Done once, from the file pulled
+# 2026-08-09, and hard-coded here because it never changes: nobody returns a
+# ballot dated July 16 any more. Historical days are settled.
+#
+# Cross-checked against the snapshot-delta method on the two days both cover,
+# and they agree exactly - Aug 7: D 10 / R 9; Aug 8: D 4 / R 4.
+#
+# COMPLETE_THROUGH matters. The file was pulled during the day on Aug 9, so its
+# Aug 9 row is a partial count. The dashboard ignores backfill past this date
+# and waits for the snapshot delta instead.
+#
+# Only these aggregate daily counts live here. The underlying file is a
+# restricted record under s.101.62(2), F.S., released to the county party for
+# political purposes; no voter-level data belongs in this public repo.
+# ---------------------------------------------------------------------------
+MAIL_BACKFILL_THROUGH = "08/08/2026"
+MAIL_BACKFILL = {
+    "07/10/2026": {"D": 1, "R": 0, "other": 0},
+    "07/15/2026": {"D": 6, "R": 4, "other": 0},
+    "07/16/2026": {"D": 5, "R": 9, "other": 0},
+    "07/17/2026": {"D": 0, "R": 2, "other": 0},
+    "07/19/2026": {"D": 5, "R": 0, "other": 0},
+    "07/20/2026": {"D": 2, "R": 8, "other": 1},
+    "07/21/2026": {"D": 1, "R": 12, "other": 1},
+    "07/22/2026": {"D": 3, "R": 11, "other": 0},
+    "07/23/2026": {"D": 3, "R": 6, "other": 0},
+    "07/24/2026": {"D": 4, "R": 4, "other": 0},
+    "07/27/2026": {"D": 6, "R": 8, "other": 0},
+    "07/28/2026": {"D": 2, "R": 8, "other": 0},
+    "07/29/2026": {"D": 7, "R": 4, "other": 0},
+    "07/30/2026": {"D": 3, "R": 14, "other": 0},
+    "07/31/2026": {"D": 6, "R": 7, "other": 0},
+    "08/03/2026": {"D": 8, "R": 6, "other": 0},
+    "08/04/2026": {"D": 6, "R": 8, "other": 0},
+    "08/05/2026": {"D": 3, "R": 12, "other": 1},
+    "08/06/2026": {"D": 3, "R": 8, "other": 0},
+    "08/07/2026": {"D": 10, "R": 9, "other": 0},
+    "08/08/2026": {"D": 4, "R": 4, "other": 0},
+    "08/09/2026": {"D": 1, "R": 1, "other": 0},
+}
+
 # container id -> key in our record
 SECTIONS = {
     "county_ablnotyet": "vbm_outstanding",
@@ -223,6 +274,22 @@ def main():
 
     data["days"] = days
     data["updated_at"] = datetime.now(TZ).isoformat(timespec="seconds")
+
+    # Written every run rather than once by hand, so the key survives any future
+    # rebuild of the file. The value is a constant, so this produces no diff
+    # after the first run.
+    data["mail_party_backfill"] = {
+        "source": "Taylor County SOE voter-level vote-by-mail file, pulled 2026-08-09",
+        "method": "count of BallotReturnDate by Party, per voter record",
+        "complete_through": MAIL_BACKFILL_THROUGH,
+        "note": (
+            "Aggregate daily party counts only - the underlying file is restricted "
+            "under s.101.62(2), F.S. and no voter-level data appears here. Verified "
+            "against the snapshot-delta method where they overlap (Aug 7, Aug 8). "
+            "Historical days are settled and do not change."
+        ),
+        "days": MAIL_BACKFILL,
+    }
 
     # Snapshot the county live feed alongside the state figures.
     data["tqv_url"] = TQV_URL
