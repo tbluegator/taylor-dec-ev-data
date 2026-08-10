@@ -158,6 +158,28 @@ check("Aug 9 is past complete_through",
       _re.sub(r"(\d\d)/(\d\d)/(\d{4})", r"\3\1\2", "08/09/2026") >
       _re.sub(r"(\d\d)/(\d\d)/(\d{4})", r"\3\1\2", MBT))
 
+print("\nregistration table")
+from scrape import REGISTRATION as RG, registration_check
+check("D and R present and positive", RG["D"] > 0 and RG["R"] > 0)
+check("parts sum to the stated total",
+      RG["D"] + RG["R"] + RG["minor"] + RG["NPA"] == RG["T"],
+      RG["D"] + RG["R"] + RG["minor"] + RG["NPA"])
+check("as_of looks like a date", _re.fullmatch(r"\d{4}-\d{2}-\d{2}", RG["as_of"]), RG["as_of"])
+# A denominator this far off would visibly skew every share on the dashboard.
+check("within 3% of the county's own active count",
+      abs(11649 - RG["T"]) / 11649 < 0.03, f"{abs(11649-RG['T'])/11649:.2%}")
+
+import io, contextlib
+def _warns(reg, ov):
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        registration_check(reg, ov)
+    return "::warning::" in buf.getvalue()
+check("no warning at the real numbers", not _warns(RG, {"ActiveRegisteredVoters": 11649}))
+check("warns when the denominator drifts",
+      _warns(RG, {"ActiveRegisteredVoters": 15000}))
+check("silent when the county feed is down", not _warns(RG, None))
+
 print("\nbackfill survives a latest.json round-trip")
 with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
     json.dump({"days": [], "election_id": "49893", "hand_edited": "keep me"}, f)

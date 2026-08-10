@@ -75,6 +75,35 @@ TZ = ZoneInfo("America/New_York")
 # restricted record under s.101.62(2), F.S., released to the county party for
 # political purposes; no voter-level data belongs in this public repo.
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Active registered voters by party, from the state's own registration report.
+#
+# Taylor is registered 7,496 R to 2,847 D. Side-by-side raw vote counts therefore
+# say more about who lives here than about who is turning out, and every chart
+# reads as a rout. The dashboard divides each party's votes by its OWN active
+# registrations so the two are comparable. Florida primaries are closed, so this
+# denominator is the genuinely eligible universe, not a proxy.
+#
+# Source: Voter Registration - By County and Party
+#   https://dos.fl.gov/elections/data-statistics/voter-registration-statistics/
+#     voter-registration-reports/voter-registration-by-county-and-party/
+#
+# Refresh this when the state posts a new monthly file, and definitely at book
+# closing before the general. registration_check() below warns if it drifts far
+# from the county feed's own active-voter count.
+# ---------------------------------------------------------------------------
+REGISTRATION = {
+    "as_of": "2026-06-30",
+    "active": True,
+    "source": ("https://dos.fl.gov/elections/data-statistics/voter-registration-statistics/"
+               "voter-registration-reports/voter-registration-by-county-and-party/"),
+    "D": 2847,
+    "R": 7496,
+    "minor": 298,
+    "NPA": 970,
+    "T": 11611,
+}
+
 MAIL_BACKFILL_THROUGH = "08/08/2026"
 MAIL_BACKFILL = {
     "07/10/2026": {"D": 1, "R": 0, "other": 0},
@@ -227,6 +256,27 @@ def monotonic_check(prev, cur):
                 )
 
 
+def registration_check(reg, tqv_ov):
+    """Warn, don't fail, if our registration table has drifted from the county's.
+
+    A stale denominator silently skews every share on the dashboard, and it goes
+    stale quietly - the numbers still render, they are just wrong. But the two
+    sources count on different dates and never match exactly, so this is a
+    warning, not a gate: publishing yesterday's denominator beats publishing
+    nothing.
+    """
+    if not tqv_ov:
+        return
+    county = tqv_ov.get("ActiveRegisteredVoters")
+    if not county or not reg.get("T"):
+        return
+    drift = abs(county - reg["T"]) / county
+    if drift > 0.03:
+        print(f"::warning::registration table ({reg['T']:,} as of {reg['as_of']}) is "
+              f"{drift:.1%} from the county's active count ({county:,}). Refresh "
+              f"REGISTRATION from the state's by-county-and-party report.")
+
+
 def soft_json(url):
     """Fetch optional JSON. Never raises - a county-feed outage must not fail the
     run, because the state figures are the ones the dashboard cannot do without."""
@@ -304,6 +354,9 @@ def main():
               f"   R early {rep.get('EarlyVoting', 0)} / mail {rep.get('Mail', 0)}")
     if tqv_ov:
         data["tqv_overrides"] = tqv_ov
+
+    data["registration"] = REGISTRATION
+    registration_check(REGISTRATION, tqv_ov)
 
     with open(OUT, "w") as f:
         json.dump(data, f, indent=1)
