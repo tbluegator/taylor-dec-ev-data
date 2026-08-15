@@ -467,7 +467,7 @@
    }
   }
  ],
- "updated_at": "2026-08-15T08:14:40-04:00",
+ "updated_at": "2026-08-15T09:57:46-04:00",
  "tqv_url": "https://s3.amazonaws.com/turnoutquickview.electionsfl.org/data/FL/TAY/84/data.json",
  "tqv_overrides_url": "https://s3.amazonaws.com/turnoutquickview.electionsfl.org/data/FL/TAY/84/overrides.json",
  "tqv": {
@@ -475,7 +475,7 @@
    "TotalRegisteredVoters": 10854,
    "ElectionName": "2026 Primary Election",
    "ElectionDate": "08/18/2026",
-   "LastUpdatedTime": "2026-08-15T12:10:01.212264+00:00",
+   "LastUpdatedTime": "2026-08-15T13:50:02.6602718+00:00",
    "CountyName": "TAYLOR",
    "FvrsElectionNumber": 49893
   },
@@ -727,13 +727,14 @@
      "Provisional": 1
     },
     "08/15/2026": {
-     "EarlyVoting": 3
+     "EarlyVoting": 37,
+     "Mail": 42
     }
    },
    "PartyType": {
     "DEM": {
      "EarlyVoting": 159,
-     "Mail": 135,
+     "Mail": 151,
      "Provisional": 1
     },
     "IND": {
@@ -749,8 +750,8 @@
      "Provisional": 1
     },
     "REP": {
-     "EarlyVoting": 718,
-     "Mail": 211,
+     "EarlyVoting": 752,
+     "Mail": 237,
      "Provisional": 3
     }
    },
@@ -761,7 +762,7 @@
       "IND": 2,
       "LPF": 2,
       "NPA": 7,
-      "REP": 721
+      "REP": 755
      }
     }
    },
@@ -776,20 +777,20 @@
     "001.4": {
      "BallotTypeTotals": {
       "EarlyVoting": 53,
-      "Mail": 31
+      "Mail": 33
      },
      "EligibleVoters": 536
     },
     "002": {
      "BallotTypeTotals": {
-      "EarlyVoting": 101,
-      "Mail": 26
+      "EarlyVoting": 105,
+      "Mail": 40
      },
      "EligibleVoters": 1353
     },
     "003": {
      "BallotTypeTotals": {
-      "EarlyVoting": 41,
+      "EarlyVoting": 43,
       "Mail": 22
      },
      "EligibleVoters": 642
@@ -810,15 +811,15 @@
     },
     "006": {
      "BallotTypeTotals": {
-      "EarlyVoting": 22,
-      "Mail": 16
+      "EarlyVoting": 24,
+      "Mail": 19
      },
      "EligibleVoters": 328
     },
     "007": {
      "BallotTypeTotals": {
-      "EarlyVoting": 190,
-      "Mail": 59
+      "EarlyVoting": 193,
+      "Mail": 66
      },
      "EligibleVoters": 1356
     },
@@ -838,22 +839,22 @@
     },
     "008.5": {
      "BallotTypeTotals": {
-      "EarlyVoting": 49,
-      "Mail": 16
+      "EarlyVoting": 51,
+      "Mail": 19
      },
      "EligibleVoters": 488
     },
     "009": {
      "BallotTypeTotals": {
-      "EarlyVoting": 38,
+      "EarlyVoting": 40,
       "Mail": 12
      },
      "EligibleVoters": 408
     },
     "010": {
      "BallotTypeTotals": {
-      "EarlyVoting": 25,
-      "Mail": 8,
+      "EarlyVoting": 27,
+      "Mail": 9,
       "Provisional": 1
      },
      "EligibleVoters": 498
@@ -861,7 +862,7 @@
     "011": {
      "BallotTypeTotals": {
       "EarlyVoting": 29,
-      "Mail": 12
+      "Mail": 13
      },
      "EligibleVoters": 423
     },
@@ -874,15 +875,15 @@
     },
     "012.3": {
      "BallotTypeTotals": {
-      "EarlyVoting": 41,
+      "EarlyVoting": 45,
       "Mail": 19
      },
      "EligibleVoters": 519
     },
     "013.1": {
      "BallotTypeTotals": {
-      "EarlyVoting": 43,
-      "Mail": 16,
+      "EarlyVoting": 46,
+      "Mail": 18,
       "Provisional": 1
      },
      "EligibleVoters": 631
@@ -890,7 +891,7 @@
     "013.2": {
      "BallotTypeTotals": {
       "EarlyVoting": 32,
-      "Mail": 21
+      "Mail": 22
      },
      "EligibleVoters": 345
     },
@@ -903,15 +904,15 @@
     "013.5": {
      "BallotTypeTotals": {
       "EarlyVoting": 16,
-      "Mail": 4,
+      "Mail": 5,
       "Provisional": 1
      },
      "EligibleVoters": 210
     },
     "014": {
      "BallotTypeTotals": {
-      "EarlyVoting": 146,
-      "Mail": 47,
+      "EarlyVoting": 156,
+      "Mail": 54,
       "Provisional": 1
      },
      "EligibleVoters": 1685
@@ -957,7 +958,7 @@
        "REP": 204
       },
       "08/15/2026": {
-       "REP": 3
+       "REP": 37
       }
      }
     }
