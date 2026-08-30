@@ -1232,7 +1232,7 @@
    }
   }
  ],
- "updated_at": "2026-08-30T13:45:34-04:00",
+ "updated_at": "2026-08-30T15:19:08-04:00",
  "tqv_url": "https://s3.amazonaws.com/turnoutquickview.electionsfl.org/data/FL/TAY/84/data.json",
  "tqv_overrides_url": "https://s3.amazonaws.com/turnoutquickview.electionsfl.org/data/FL/TAY/84/overrides.json",
  "tqv": {
@@ -1240,7 +1240,7 @@
    "TotalRegisteredVoters": 10854,
    "ElectionName": "2026 Primary Election",
    "ElectionDate": "08/18/2026",
-   "LastUpdatedTime": "2026-08-30T17:40:01.2293154+00:00",
+   "LastUpdatedTime": "2026-08-30T19:20:02.0893031+00:00",
    "CountyName": "TAYLOR",
    "FvrsElectionNumber": 49893
   },
